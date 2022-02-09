@@ -11,7 +11,10 @@ export default function WordDisplay() {
     );
     const data = await response.json();
     //console.log(data);
-    let dailyWord = data[0].word;
+
+    // return a random word
+    let randomWord = Math.floor(Math.random() * 31);
+    let dailyWord = data[randomWord].word;
     setWord(dailyWord);
   };
 
