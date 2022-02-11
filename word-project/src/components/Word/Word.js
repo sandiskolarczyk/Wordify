@@ -1,7 +1,7 @@
-export default function Word({ word }) {
+export default function Word({ word, date }) {
   return (
     <>
-      {/* <p>{date}</p> */}
+      <p>{date}</p>
       <h3>{word}</h3>
     </>
   );

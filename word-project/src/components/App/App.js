@@ -1,15 +1,31 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import Word from "../Word/Word.js";
-import SongDisplay from "../SongDisplay/SongDisplay.js";
+//import SongDisplay from "../SongDisplay/SongDisplay.js";
 
 function App() {
   const url = "http://localhost:5000";
 
   const [word, setWord] = useState("");
-
   const [API, setAPI] = useState([]);
-  //   const [date, setDate] = useState("");
+
+  const [date, setDate] = useState("");
+
+  const newDate = () => {
+    let today = new Date();
+    today =
+      today.getDate() +
+      "/" +
+      (today.getMonth() + 1) +
+      "/" +
+      today.getFullYear();
+    console.log(today);
+    setDate(today);
+  };
+
+  useEffect(() => {
+    newDate();
+  }, []);
 
   const fetchWord = async () => {
     const response = await fetch(
@@ -25,44 +41,35 @@ function App() {
 
   useEffect(() => {
     fetchWord();
-  }, []);
+  }, [date]);
 
-  //${url}/search?${urlSearch}
-  //https://deezerdevs-deezer.p.rapidapi.com/search?q=${word}
+  // const fetchSongs = async () => {
+  //   const urlSearch = new URLSearchParams({ title: word });
+  //   await fetch(`${url}/search/?${urlSearch}`, {
+  //     method: "GET",
+  //   })
+  //     .then((response) => {
+  //       return response.json();
+  //     })
+  //     .then(async function (data) {
+  //       console.log(data);
 
-  const fetchSongs = async () => {
-    const urlSearch = new URLSearchParams({ title: word });
-    await fetch(`${url}/search/?${urlSearch}`, {
-      method: "GET",
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then(async function (data) {
-        console.log(data);
+  //       setAPI(data.data);
+  //     });
+  // };
 
-        setAPI(data.data);
-      });
-  };
-
-  useEffect(() => {
-    // const data = await response.json();
-    // console.log(data);
-    fetchSongs();
-  }, [word]);
-
-  //   function newDate() {
-  //     let date = new Date();
-  //     setDate(date);
-  //   }
+  // useEffect(() => {
+  //   fetchSongs();
+  // }, [word]);
 
   return (
     <>
       <h1>Word Of The Day</h1>
-      <Word word={word} />
-      <SongDisplay data={API} />
+      <Word word={word} date={date} />
     </>
   );
 }
 
 export default App;
+
+//<SongDisplay data={API} />
