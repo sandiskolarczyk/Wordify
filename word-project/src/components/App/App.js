@@ -1,4 +1,4 @@
-import "./App.css";
+import css from "./App.module.css";
 import { useEffect, useState } from "react";
 import Word from "../Word/Word.js";
 //import SongDisplay from "../SongDisplay/SongDisplay.js";
@@ -64,7 +64,7 @@ function App() {
 
   return (
     <>
-      <h1>Word Of The Day</h1>
+      <h1 className={css.header}>Word Of The Day</h1>
       <Word word={word} date={date} />
     </>
   );
