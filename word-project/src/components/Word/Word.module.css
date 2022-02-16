@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@900&family=Merriweather:wght@400;700&display=swap");
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.word {
+  background-color: beige;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 25px;
+  width: 20em;
+}
+
+p {
+  font-family: "Merriweather";
+  font-weight: 400;
+  font-size: 1.2em;
+}
+
+h3 {
+  font-family: "Merriweather";
+  font-weight: 700;
+  font-size: 2em;
+  margin-bottom: 10px;
+}
