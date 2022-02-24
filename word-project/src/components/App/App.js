@@ -10,6 +10,7 @@ function App() {
   const [API, setAPI] = useState([]);
 
   const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
 
   const newDate = () => {
     let today = new Date();
@@ -41,7 +42,37 @@ function App() {
 
   useEffect(() => {
     fetchWord();
-  }, [date]);
+  }, []);
+
+  const resetAtMidnight = () => {
+    let now = new Date();
+    let night = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + 1, // the next day, ...
+      0,
+      0,
+      0 // ...at 00:00:00 hours
+    );
+    let msToMidnight = night.getTime() - now.getTime();
+
+    setTimeout(() => {
+      fetchWord(); //      <-- This is the function being called at midnight.
+      resetAtMidnight(); //      Then, reset again next midnight.
+    }, msToMidnight);
+  };
+
+  // const newTime = () => {
+  //   let today = new Date();
+
+  //   //get current local time
+  //   today = today.toLocaleTimeString("en-UK");
+
+  //   //that will set the time to 00:00:00.000 of current timezone & get the nearest midnight in future
+  //   let midnight = today.setHours(24, 0, 0, 0);
+  //   console.log(today);
+  //   setTime(today);
+  // };
 
   // const fetchSongs = async () => {
   //   const urlSearch = new URLSearchParams({ title: word });
@@ -72,4 +103,6 @@ function App() {
 
 export default App;
 
-//<SongDisplay data={API} />
+{
+  /* <SongDisplay data={API} /> */
+}
