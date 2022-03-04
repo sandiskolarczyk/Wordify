@@ -1,10 +1,22 @@
-export default function Song({ title, artist, image, preview }) {
+export default function Song({ songId }) {
+  const style = {
+    borderRadius: "30px",
+    padding: "17px",
+    height: "300px",
+    width: "276px",
+  };
   return (
     <>
-      <img alt="Album/Song Cover" src={image} />
-      <h3>{title}</h3>
-      <h3>{artist}</h3>
-      <audio controls src={preview}></audio>
+      <iframe
+        title="song"
+        style={style}
+        src={`https://open.spotify.com/embed/track/${songId}?utm_source=generator`}
+        width="20%"
+        height="380"
+        frameBorder="0"
+        allowFullScreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      ></iframe>
     </>
   );
 }

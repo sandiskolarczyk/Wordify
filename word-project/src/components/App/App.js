@@ -1,7 +1,7 @@
 import css from "./App.module.css";
 import { useEffect, useState } from "react";
 import Word from "../Word/Word.js";
-//import SongDisplay from "../SongDisplay/SongDisplay.js";
+import SongDisplay from "../SongDisplay/SongDisplay.js";
 
 function App() {
   const url = "http://localhost:5000";
@@ -74,35 +74,44 @@ function App() {
   //   setTime(today);
   // };
 
-  // const fetchSongs = async () => {
-  //   const urlSearch = new URLSearchParams({ title: word });
-  //   await fetch(`${url}/search/?${urlSearch}`, {
-  //     method: "GET",
-  //   })
-  //     .then((response) => {
-  //       return response.json();
-  //     })
-  //     .then(async function (data) {
-  //       console.log(data);
+  const fetchSongs = async () => {
+    const urlSearch = new URLSearchParams({ song: word });
+    await fetch(`${url}/songs-of-the-day?${urlSearch}`, {
+      method: "GET",
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then(async function (data) {
+        console.log(data);
 
-  //       setAPI(data.data);
-  //     });
-  // };
+        setAPI(data);
+      });
+  };
 
-  // useEffect(() => {
-  //   fetchSongs();
-  // }, [word]);
+  useEffect(() => {
+    fetchSongs();
+  }, [word]);
 
   return (
     <>
       <h1 className={css.header}>Word Of The Day</h1>
       <Word word={word} date={date} />
+      <SongDisplay data={API} />
+      <p className={css.bottomLink}>
+        Made with ♥ by{" "}
+        <a
+          className={css.githubLink}
+          target="_blank"
+          rel="noreferrer"
+          href="https://github.com/sandiskolarczyk?tab=overview&from=2022-03-01&to=2022-03-03"
+        >
+          Sandra
+        </a>
+        .
+      </p>
     </>
   );
 }
 
 export default App;
-
-{
-  /* <SongDisplay data={API} /> */
-}
