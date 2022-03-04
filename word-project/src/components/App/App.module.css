@@ -14,10 +14,12 @@
 .bottomLink {
   text-align: center;
   color: black;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
 }
 
 .githubLink {
   text-align: center;
-  color: #2d00f7;
+  color: #71253a;
   font-family: "Abril Fatface", sans-serif;
 }
