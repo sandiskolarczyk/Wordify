@@ -76,7 +76,7 @@ function App() {
 
   const fetchSongs = async () => {
     const urlSearch = new URLSearchParams({ song: word });
-    await fetch(`${url}/?${urlSearch}`, {
+    await fetch(`${url}/songs-of-the-day?${urlSearch}`, {
       method: "GET",
     })
       .then((response) => {
@@ -108,7 +108,7 @@ function App() {
           className={css.githubLink}
           target="_blank"
           rel="noreferrer"
-          href="https://github.com/sandiskolarczyk?tab=overview&from=2022-03-01&to=2022-03-03"
+          href="https://github.com/sandiskolarczyk"
         >
           Sandra
         </a>

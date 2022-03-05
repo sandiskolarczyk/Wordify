@@ -14,14 +14,16 @@
 .bottomLink {
   text-align: center;
   color: black;
-  font-family: sans-serif;
-  font-weight: 500;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
 }
 
 .githubLink {
   text-align: center;
   color: #71253a;
-  font-family: "Abril Fatface", sans-serif;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  text-decoration: none;
 }
 
 .message {
