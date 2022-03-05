@@ -22,7 +22,7 @@ Stay tuned as it is still being continously updated 🤩
 - Axios 0.24.0
 - Express.js 4.17.2
 
-## 🚧 Update History
+## Update History
 
 - Initially, the app was made with vanilla Javascript. However, this has been refactored so the current version utilises React.js.
 - For the music data, I have initially used [Deezer API](https://rapidapi.com/deezerdevs/api/deezer-1/). However, I have encountered many issues such as exceeding the quota limit, even though I haven't made any calls yet. Therefore, currently, I'm using [Spotify API](https://developer.spotify.com/documentation/web-api/).
