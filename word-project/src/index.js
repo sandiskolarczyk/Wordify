@@ -4,10 +4,14 @@ import "./index.css";
 import App from "../src/components/App/App.js";
 import reportWebVitals from "./reportWebVitals";
 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <BrowserRouter>
+    <Routes>
+      <Route path="/songs-of-the-day" element={<App />} />
+    </Routes>
+  </BrowserRouter>,
   document.getElementById("root")
 );
 
