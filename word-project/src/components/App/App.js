@@ -76,7 +76,7 @@ function App() {
 
   const fetchSongs = async () => {
     const urlSearch = new URLSearchParams({ song: word });
-    await fetch(`${url}/songs-of-the-day?${urlSearch}`, {
+    await fetch(`${url}/?${urlSearch}`, {
       method: "GET",
     })
       .then((response) => {
