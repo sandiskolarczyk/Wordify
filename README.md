@@ -6,7 +6,7 @@ An app that displays a word of the day and gives songs based on the word
 
 - [Introduction](#introduction)
 - [Built With](#built-with)
-- [Update History](#🚧update-history)
+- [Update History](#🚧-update-history)
 - [Roadmap](#roadmap)
 - [Links](#links)
 
