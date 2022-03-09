@@ -2,6 +2,8 @@
 
 An app that displays a word of the day and gives songs based on the word
 
+https://wordify-app.netlify.app/songs-of-the-day ✨
+
 ## Table of Contents
 
 - [Introduction](#introduction)
@@ -30,7 +32,7 @@ Stay tuned as it is still being continously updated 🤩
 
 ## Roadmap
 
-- [ ]  Deployment
+- [x]  Deployment
 - [ ]  Test with React Testing Library & Jest
 - [ ]  Refactor the app to utilise Typescript
 
