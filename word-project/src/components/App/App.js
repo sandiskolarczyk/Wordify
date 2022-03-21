@@ -10,7 +10,7 @@ function App() {
   const [API, setAPI] = useState([]);
 
   const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  //const [time, setTime] = useState("");
 
   const newDate = () => {
     let today = new Date();
@@ -28,39 +28,67 @@ function App() {
     newDate();
   }, []);
 
-  const fetchWord = async () => {
-    const response = await fetch(
-      `https://words-api-project.herokuapp.com/words`
-    );
-    const data = await response.json();
+  let today = new Date().toLocaleDateString();
+  window.localStorage.setItem("date", today);
+  const calendarDate = window.localStorage.getItem("date");
+  // Initialize the date object as a date object again here
+  today = new Date(calendarDate).toLocaleDateString();
+  //console.log(today);
 
-    // return a random word
-    let randomNumber = Math.floor(Math.random() * 31);
-    let dailyWord = data[randomNumber].word;
-    setWord(dailyWord);
+  // checks if one day has passed.
+  function hasOneDayPassed() {
+    // if there's a date in localstorage and it's equal to the above:
+    // inferring a day has yet to pass since both dates are equal.
+    if (localStorage.date === today) {
+      console.log(`It's still the same day ` + localStorage.date);
+      return false;
+
+      // this portion of logic occurs when a day has passed
+    } else if (localStorage.date !== today) {
+      console.log(`It's a new day ` + localStorage.date);
+      return true;
+    }
+  }
+
+  hasOneDayPassed();
+
+  const fetchWord = async () => {
+    if (hasOneDayPassed) {
+      const response = await fetch(
+        `https://words-api-project.herokuapp.com/words`
+      );
+      const data = await response.json();
+
+      // return a random word
+      let randomNumber = Math.floor(Math.random() * 31);
+      let dailyWord = data[randomNumber].word;
+      setWord(dailyWord);
+    } else {
+      return;
+    }
   };
 
   useEffect(() => {
     fetchWord();
   }, []);
 
-  const resetAtMidnight = () => {
-    let now = new Date();
-    let night = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate() + 1, // the next day, ...
-      0,
-      0,
-      0 // ...at 00:00:00 hours
-    );
-    let msToMidnight = night.getTime() - now.getTime();
+  // const resetAtMidnight = () => {
+  //   let now = new Date();
+  //   let night = new Date(
+  //     now.getFullYear(),
+  //     now.getMonth(),
+  //     now.getDate() + 1, // the next day, ...
+  //     0,
+  //     0,
+  //     0 // ...at 00:00:00 hours
+  //   );
+  //   let msToMidnight = night.getTime() - now.getTime();
 
-    setTimeout(() => {
-      fetchWord(); //      <-- This is the function being called at midnight.
-      resetAtMidnight(); //      Then, reset again next midnight.
-    }, msToMidnight);
-  };
+  //   setTimeout(() => {
+  //     fetchWord(); //      <-- This is the function being called at midnight.
+  //     resetAtMidnight(); //      Then, reset again next midnight.
+  //   }, msToMidnight);
+  // };
 
   // const newTime = () => {
   //   let today = new Date();
