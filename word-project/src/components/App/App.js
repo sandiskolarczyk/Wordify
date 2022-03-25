@@ -1,6 +1,6 @@
 import css from "./App.module.css";
 import { useEffect, useState } from "react";
-import Word from "../Word/Word.js";
+import Word from "../Word/Word.tsx";
 import SongDisplay from "../SongDisplay/SongDisplay.js";
 
 function App() {

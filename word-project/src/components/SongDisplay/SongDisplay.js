@@ -1,4 +1,4 @@
-import Song from "../Song/Song.js";
+import Song from "../Song/Song.tsx";
 
 export default function SongDisplay({ data }) {
   return (
