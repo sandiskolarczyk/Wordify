@@ -1,6 +1,11 @@
 import css from "./Word.module.css";
 
-export default function Word({ word, date }) {
+type Props = {
+  word: string;
+  date: string;
+};
+
+export default function Word({ word, date }: Props) {
   return (
     <div className={css.container}>
       <div className={css.word}>
