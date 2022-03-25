@@ -123,25 +123,27 @@ function App() {
 
   return (
     <>
-      <h1 className={css.header}>Word Of The Day</h1>
-      <Word word={word} date={date} />
-      <p className={css.message}>
-        I hope you enjoy today's songs. Come back to discover tomorrow's mood!
-        😜
-      </p>
-      <SongDisplay data={API} />
-      <p className={css.bottomLink}>
-        Made with ♥ (& a touch of silliness) by{" "}
-        <a
-          className={css.githubLink}
-          target="_blank"
-          rel="noreferrer"
-          href="https://github.com/sandiskolarczyk"
-        >
-          Sandra
-        </a>
-        .
-      </p>
+      <div data-testid="app-component">
+        <h1 className={css.header}>Word Of The Day</h1>
+        <Word word={word} date={date} />
+        <p className={css.message}>
+          I hope you enjoy today's songs. Come back to discover tomorrow's mood!
+          😜
+        </p>
+        <SongDisplay data={API} />
+        <p className={css.bottomLink}>
+          Made with ♥ (& a touch of silliness) by{" "}
+          <a
+            className={css.githubLink}
+            target="_blank"
+            rel="noreferrer"
+            href="https://github.com/sandiskolarczyk"
+          >
+            Sandra
+          </a>
+          .
+        </p>
+      </div>
     </>
   );
 }
