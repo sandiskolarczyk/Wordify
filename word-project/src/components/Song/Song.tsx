@@ -1,5 +1,5 @@
 type songProp = {
-  songId: number;
+  songId: any;
 };
 
 export default function Song({ songId }: songProp) {

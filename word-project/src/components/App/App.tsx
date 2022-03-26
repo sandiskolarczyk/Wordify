@@ -1,7 +1,7 @@
 import css from "./App.module.css";
 import { useEffect, useState } from "react";
 import Word from "../Word/Word";
-import SongDisplay from "../SongDisplay/SongDisplay.js";
+import SongDisplay from "../SongDisplay/SongDisplay";
 
 function App() {
   const url: string = "https://wordify-app.herokuapp.com";
@@ -36,7 +36,7 @@ function App() {
   //console.log(today);
 
   // checks if one day has passed.
-  function hasOneDayPassed(): boolean | undefined {
+  const hasOneDayPassed = (): boolean | undefined => {
     // if there's a date in localstorage and it's equal to the above:
     // inferring a day has yet to pass since both dates are equal.
     if (localStorage.date === today) {
@@ -48,12 +48,14 @@ function App() {
       console.log(`It's a new day ` + localStorage.date);
       return true;
     }
-  }
+  };
 
-  hasOneDayPassed();
+  console.log(hasOneDayPassed());
 
   const fetchWord = async (): Promise<void> => {
-    if (hasOneDayPassed) {
+    if (hasOneDayPassed()) {
+      return;
+    } else {
       const response = await fetch(
         `https://words-api-project.herokuapp.com/words`
       );
@@ -63,8 +65,6 @@ function App() {
       let randomNumber = Math.floor(Math.random() * 31);
       let dailyWord = data[randomNumber].word;
       setWord(dailyWord);
-    } else {
-      return;
     }
   };
 
