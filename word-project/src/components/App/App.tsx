@@ -1,10 +1,10 @@
 import css from "./App.module.css";
 import { useEffect, useState } from "react";
-import Word from "../Word/Word.tsx";
+import Word from "../Word/Word";
 import SongDisplay from "../SongDisplay/SongDisplay.js";
 
 function App() {
-  const url = "https://wordify-app.herokuapp.com";
+  const url: string = "https://wordify-app.herokuapp.com";
 
   const [word, setWord] = useState("");
   const [API, setAPI] = useState([]);
@@ -12,8 +12,8 @@ function App() {
   const [date, setDate] = useState("");
   //const [time, setTime] = useState("");
 
-  const newDate = () => {
-    let today = new Date();
+  const newDate = (): void => {
+    let today: Date | string = new Date();
     today =
       today.getDate() +
       "/" +
@@ -28,15 +28,15 @@ function App() {
     newDate();
   }, []);
 
-  let today = new Date().toLocaleDateString();
+  let today: string = new Date().toLocaleDateString();
   window.localStorage.setItem("date", today);
-  const calendarDate = window.localStorage.getItem("date");
+  const calendarDate: string | Date = window.localStorage.getItem("date");
   // Initialize the date object as a date object again here
   today = new Date(calendarDate).toLocaleDateString();
   //console.log(today);
 
   // checks if one day has passed.
-  function hasOneDayPassed() {
+  function hasOneDayPassed(): boolean | undefined {
     // if there's a date in localstorage and it's equal to the above:
     // inferring a day has yet to pass since both dates are equal.
     if (localStorage.date === today) {
@@ -52,7 +52,7 @@ function App() {
 
   hasOneDayPassed();
 
-  const fetchWord = async () => {
+  const fetchWord = async (): Promise<void> => {
     if (hasOneDayPassed) {
       const response = await fetch(
         `https://words-api-project.herokuapp.com/words`
@@ -102,7 +102,7 @@ function App() {
   //   setTime(today);
   // };
 
-  const fetchSongs = async () => {
+  const fetchSongs = async (): Promise<void> => {
     const urlSearch = new URLSearchParams({ song: word });
     await fetch(`${url}/songs-of-the-day?${urlSearch}`, {
       method: "GET",
