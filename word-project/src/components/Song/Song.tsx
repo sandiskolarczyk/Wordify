@@ -1,8 +1,4 @@
-type songProp = {
-  songId: any;
-};
-
-export default function Song({ songId }: songProp) {
+export default function Song({ songId }: any) {
   const style = {
     borderRadius: "30px",
     padding: "17px",
