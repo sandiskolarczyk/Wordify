@@ -34,7 +34,7 @@ Stay tuned as it is still being continously updated 🤩
 
 - [x]  Deployment
 - [ ]  Test with React Testing Library & Jest
-- [ ]  Refactor the app to utilise Typescript
+- [x]  Refactor the app to utilise Typescript
 
 ## Links
 
