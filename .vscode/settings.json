@@ -1,0 +1,3 @@
+{
+  "typescript.tsdk": "./word-project/node_modules/typescript/lib"
+}
