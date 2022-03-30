@@ -14,7 +14,7 @@ export default function Song({ songId }: any) {
         width="20%"
         height="380"
         frameBorder="0"
-        allowFullScreen=""
+        allowFullScreen={true}
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
       ></iframe>
     </>
