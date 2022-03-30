@@ -7,7 +7,7 @@ function App() {
   const url: string = "https://wordify-app.herokuapp.com";
 
   const [word, setWord] = useState(() => {
-    // getting stored value
+    // get stored value
     const savedWord = window.localStorage.getItem("word");
     return savedWord || "";
   });
@@ -15,15 +15,15 @@ function App() {
   const [API, setAPI] = useState([]);
 
   const [date, setDate] = useState("");
-  //const [time, setTime] = useState("");
 
   useEffect(() => {
-    // storing word of the day
+    // store word of the day if there isn't any yet
     if (!window.localStorage.getItem("word")) {
       window.localStorage.setItem("word", word);
     }
   }, [word]);
 
+  // this is a format for the date which is displayed alongside the word
   const newDate = (): void => {
     let today: Date | string = new Date();
     today =
@@ -40,17 +40,17 @@ function App() {
     newDate();
   }, []);
 
-  let today: string = new Date().toLocaleDateString();
+  // store and get the word from local storage
+  let today: string | null = new Date().toLocaleDateString();
   window.localStorage.setItem("date", today);
-  const calendarDate: string | Date = window.localStorage.getItem("date");
-  // Initialize the date object as a date object again here
-  today = new Date(calendarDate).toLocaleDateString();
+  const calendarDate: string | null = window.localStorage.getItem("date");
+  today = calendarDate;
   //console.log(today);
 
-  // checks if one day has passed.
+  // check if one day has passed
   const hasOneDayPassed = (): boolean | undefined => {
-    // if there's a date in localstorage and it's equal to the above:
-    // inferring a day has yet to pass since both dates are equal.
+    // if there's a date in local storage and it's equal to the above:
+    // inferring a day has yet to pass since both dates are equal
     if (localStorage.date === today) {
       console.log(`It's still the same day ` + localStorage.date);
       return false;
