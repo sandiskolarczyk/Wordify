@@ -6,14 +6,17 @@ import SongDisplay from "../SongDisplay/SongDisplay";
 function App() {
   const url: string = "https://wordify-app.herokuapp.com";
 
+  // state for word of the day
   const [word, setWord] = useState(() => {
     // get stored value
     const savedWord = window.localStorage.getItem("word");
     return savedWord || "";
   });
 
+  // state for array of song ids from spotify API
   const [API, setAPI] = useState([]);
 
+  // state for date to be displayed for the user to see
   const [date, setDate] = useState("");
 
   useEffect(() => {
@@ -23,7 +26,8 @@ function App() {
     }
   }, [word]);
 
-  // this is a format for the date which is displayed alongside the word
+  // this is a format for the date which is displayed alongside the word for the user to see
+  // (different than date in local storage)
   const newDate = (): void => {
     let today: Date | string = new Date();
     today =
@@ -32,7 +36,7 @@ function App() {
       (today.getMonth() + 1) +
       "/" +
       today.getFullYear();
-    console.log(today);
+    //console.log(today);
     setDate(today);
   };
 
@@ -40,7 +44,7 @@ function App() {
     newDate();
   }, []);
 
-  // store and get the word from local storage
+  // store and get the date from local storage
   let today: string | null = new Date().toLocaleDateString();
   window.localStorage.setItem("date", today);
   const calendarDate: string | null = window.localStorage.getItem("date");
@@ -62,11 +66,12 @@ function App() {
     }
   };
 
-  console.log(hasOneDayPassed());
+  //console.log(hasOneDayPassed());
 
   const fetchWord = async (): Promise<void> => {
-    if (hasOneDayPassed()) {
+    if (hasOneDayPassed() === false) {
       window.localStorage.getItem("word");
+      setWord(word);
       return;
     } else {
       const response = await fetch(
@@ -85,22 +90,21 @@ function App() {
     fetchWord();
   }, []);
 
-  const fetchSongs = async (): Promise<void> => {
-    const urlSearch = new URLSearchParams({ song: word });
-    await fetch(`${url}/songs-of-the-day?${urlSearch}`, {
-      method: "GET",
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then(async function (data) {
-        console.log(data);
-
-        setAPI(data);
-      });
-  };
-
   useEffect(() => {
+    const fetchSongs = async (): Promise<void> => {
+      const urlSearch = new URLSearchParams({ song: word });
+      await fetch(`${url}/songs-of-the-day?${urlSearch}`, {
+        method: "GET",
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then(async function (data) {
+          //console.log(data);
+
+          setAPI(data);
+        });
+    };
     fetchSongs();
   }, [word]);
 
