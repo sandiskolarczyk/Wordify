@@ -20,10 +20,15 @@ function App() {
   const [date, setDate] = useState("");
 
   useEffect(() => {
-    // store word of the day if there isn't any yet
-    if (!window.localStorage.getItem("word")) {
-      window.localStorage.setItem("word", word);
-    }
+    const now = new Date();
+
+    // milliseconds until midnight
+    const expiryTime = now.setHours(24, 0, 0, 0) - Date.now();
+    console.log(`expiry time: ` + expiryTime);
+
+    window.localStorage.setItem("word", word);
+    window.localStorage.setItem("expiry", JSON.stringify(expiryTime));
+    console.log(word);
   }, [word]);
 
   // this is a format for the date which is displayed alongside the word for the user to see
@@ -61,7 +66,7 @@ function App() {
 
       // this portion of logic occurs when a day has passed
     } else if (localStorage.date !== today) {
-      console.log(`It's a new day ` + localStorage.date);
+      console.log(`It's a new day ` + today);
       return true;
     }
   };
@@ -71,7 +76,6 @@ function App() {
   const fetchWord = async (): Promise<void> => {
     if (hasOneDayPassed() === false) {
       window.localStorage.getItem("word");
-      setWord(word);
       return;
     } else {
       const response = await fetch(
