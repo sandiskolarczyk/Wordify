@@ -9,7 +9,7 @@ function App() {
   // state for word of the day
   const [word, setWord] = useState(() => {
     // get stored value
-    const savedWord = window.localStorage.getItem("word");
+    const savedWord: string | null = window.localStorage.getItem("word");
     return savedWord || "";
   });
 
@@ -18,18 +18,6 @@ function App() {
 
   // state for date to be displayed for the user to see
   const [date, setDate] = useState("");
-
-  useEffect(() => {
-    const now = new Date();
-
-    // milliseconds until midnight
-    const expiryTime = now.setHours(24, 0, 0, 0) - Date.now();
-    console.log(`expiry time: ` + expiryTime);
-
-    window.localStorage.setItem("word", word);
-    window.localStorage.setItem("expiry", JSON.stringify(expiryTime));
-    console.log(word);
-  }, [word]);
 
   // this is a format for the date which is displayed alongside the word for the user to see
   // (different than date in local storage)
@@ -48,6 +36,23 @@ function App() {
   useEffect(() => {
     newDate();
   }, []);
+
+  useEffect((): void => {
+    const now: Date | string = new Date();
+
+    // the current millisecond time
+    const currentTime: number = now.getTime();
+
+    // milliseconds until midnight
+    const tillMidnight: number = now.setHours(24, 0, 0, 0) - Date.now();
+
+    const expiryTime: number = currentTime + tillMidnight;
+    console.log(`expiry time: ` + expiryTime);
+
+    window.localStorage.setItem("word", word);
+    window.localStorage.setItem("expiry", JSON.stringify(expiryTime));
+    console.log(word);
+  }, [word]);
 
   // store and get the date from local storage
   let today: string | null = new Date().toLocaleDateString();
@@ -76,6 +81,16 @@ function App() {
   const fetchWord = async (): Promise<void> => {
     if (hasOneDayPassed() === false) {
       window.localStorage.getItem("word");
+      window.localStorage.getItem("expiry");
+      const now: Date = new Date();
+      // compare the expiry time of the item with the current time
+      if (now.getTime() > localStorage.expiry) {
+        // If the item is expired, delete the item from storage
+        // and return
+        window.localStorage.removeItem("word");
+        window.localStorage.removeItem("expiry");
+        return;
+      }
       return;
     } else {
       const response = await fetch(
@@ -84,7 +99,7 @@ function App() {
       const data = await response.json();
 
       // return a random word
-      let randomNumber = Math.floor(Math.random() * 31);
+      let randomNumber: number = Math.floor(Math.random() * 31);
       let dailyWord = data[randomNumber].word;
       setWord(dailyWord);
     }
