@@ -78,21 +78,41 @@ function App() {
 
   //console.log(hasOneDayPassed());
 
+  // const fetchWord = async (): Promise<void> => {
+  //   if (hasOneDayPassed() === false) {
+  //     window.localStorage.getItem("word");
+  //     window.localStorage.getItem("expiry");
+
+  //     setWord(word);
+
+  //     const now: Date = new Date();
+  //     // compare the expiry time of the item with the current time
+  //     if (now.getTime() > localStorage.expiry) {
+  //       // If the item is expired, delete the item from storage
+  //       // and return
+  //       window.localStorage.removeItem("word");
+  //       window.localStorage.removeItem("expiry");
+  //       return;
+  //     }
+  //     return;
+  //   } else {
+  //     const response = await fetch(
+  //       `https://words-api-project.herokuapp.com/words`
+  //     );
+  //     const data = await response.json();
+
+  //     // return a random word
+  //     let randomNumber: number = Math.floor(Math.random() * 31);
+  //     let dailyWord = data[randomNumber].word;
+  //     setWord(dailyWord);
+  //   }
+  // };
+
   const fetchWord = async (): Promise<void> => {
-    if (hasOneDayPassed() === false) {
-      window.localStorage.getItem("word");
-      window.localStorage.getItem("expiry");
-      const now: Date = new Date();
-      // compare the expiry time of the item with the current time
-      if (now.getTime() > localStorage.expiry) {
-        // If the item is expired, delete the item from storage
-        // and return
-        window.localStorage.removeItem("word");
-        window.localStorage.removeItem("expiry");
-        return;
-      }
-      return;
-    } else {
+    const word = localStorage.getItem("word");
+    localStorage.getItem("expiry");
+    // if the word doesn't exist, fetch from API and set the word state
+    if (!word) {
       const response = await fetch(
         `https://words-api-project.herokuapp.com/words`
       );
@@ -103,6 +123,16 @@ function App() {
       let dailyWord = data[randomNumber].word;
       setWord(dailyWord);
     }
+    const now = new Date();
+    // compare the expiry time of the item with the current time
+    if (now.getTime() > localStorage.expiry) {
+      // If the item is expired, delete the item from storage
+      // and return
+      window.localStorage.removeItem("word");
+      window.localStorage.removeItem("expiry");
+      return;
+    }
+    return window.localStorage.word;
   };
 
   useEffect(() => {
