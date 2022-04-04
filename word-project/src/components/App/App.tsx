@@ -42,12 +42,14 @@ function App() {
 
     // the current millisecond time
     const currentTime: number = now.getTime();
+    console.log(`current time: ${currentTime}`);
 
     // milliseconds until midnight
     const tillMidnight: number = now.setHours(24, 0, 0, 0) - Date.now();
+    console.log(`till midnight: ${tillMidnight}`);
 
     const expiryTime: number = currentTime + tillMidnight;
-    console.log(`expiry time: ` + expiryTime);
+    console.log(`expiry time: ${expiryTime}`);
 
     window.localStorage.setItem("word", word);
     window.localStorage.setItem("expiry", JSON.stringify(expiryTime));
@@ -57,8 +59,8 @@ function App() {
   // store and get the date from local storage
   let today: string | null = new Date().toLocaleDateString();
   window.localStorage.setItem("date", today);
-  const calendarDate: string | null = window.localStorage.getItem("date");
-  today = calendarDate;
+  // const calendarDate: string | null = window.localStorage.getItem("date");
+  // today = calendarDate;
   //console.log(today);
 
   // check if one day has passed
@@ -66,54 +68,23 @@ function App() {
     // if there's a date in local storage and it's equal to the above:
     // inferring a day has yet to pass since both dates are equal
     if (localStorage.date === today) {
-      console.log(`It's still the same day ` + localStorage.date);
+      console.log(`It's still the same day: ${localStorage.date}`);
       return false;
 
       // this portion of logic occurs when a day has passed
     } else if (localStorage.date !== today) {
-      console.log(`It's a new day ` + today);
+      console.log(`It's a new day: ${today}`);
       return true;
     }
   };
 
   //console.log(hasOneDayPassed());
 
-  // const fetchWord = async (): Promise<void> => {
-  //   if (hasOneDayPassed() === false) {
-  //     window.localStorage.getItem("word");
-  //     window.localStorage.getItem("expiry");
-
-  //     setWord(word);
-
-  //     const now: Date = new Date();
-  //     // compare the expiry time of the item with the current time
-  //     if (now.getTime() > localStorage.expiry) {
-  //       // If the item is expired, delete the item from storage
-  //       // and return
-  //       window.localStorage.removeItem("word");
-  //       window.localStorage.removeItem("expiry");
-  //       return;
-  //     }
-  //     return;
-  //   } else {
-  //     const response = await fetch(
-  //       `https://words-api-project.herokuapp.com/words`
-  //     );
-  //     const data = await response.json();
-
-  //     // return a random word
-  //     let randomNumber: number = Math.floor(Math.random() * 31);
-  //     let dailyWord = data[randomNumber].word;
-  //     setWord(dailyWord);
-  //   }
-  // };
-
   const fetchWord = async (): Promise<void> => {
-    const word = localStorage.getItem("word");
-    localStorage.getItem("expiry");
-    // if the word doesn't exist, fetch from API and set the word state
-    if (!word) {
-      const response = await fetch(
+    if (hasOneDayPassed() === false) {
+      return;
+    } else {
+      const response: Response = await fetch(
         `https://words-api-project.herokuapp.com/words`
       );
       const data = await response.json();
@@ -123,7 +94,42 @@ function App() {
       let dailyWord = data[randomNumber].word;
       setWord(dailyWord);
     }
-    const now = new Date();
+  };
+
+  useEffect(() => {
+    fetchWord();
+  }, []);
+
+  // const fetchWord = async (): Promise<void> => {
+  //   const response = await fetch(
+  //     `https://words-api-project.herokuapp.com/words`
+  //   );
+  //   const data = await response.json();
+
+  //   // return a random word
+  //   let randomNumber: number = Math.floor(Math.random() * 31);
+  //   let dailyWord = data[randomNumber].word;
+  //   setWord(dailyWord);
+  // const word = localStorage.getItem("word");
+  // localStorage.getItem("expiry");
+  // // if the word doesn't exist, fetch from API and set the word state
+  // if (!word) {
+  // }
+  // const now = new Date();
+  // // compare the expiry time of the item with the current time
+  // if (now.getTime() > localStorage.expiry) {
+  //   console.log(now.getTime());
+  //   // If the item is expired, delete the item from storage
+  //   // and return
+  //   window.localStorage.removeItem("word");
+  //   window.localStorage.removeItem("expiry");
+  //   return;
+  // }
+  // return window.localStorage.word;
+  //};
+
+  const removeStorageWord = (): void => {
+    const now: Date = new Date();
     // compare the expiry time of the item with the current time
     if (now.getTime() > localStorage.expiry) {
       // If the item is expired, delete the item from storage
@@ -132,11 +138,11 @@ function App() {
       window.localStorage.removeItem("expiry");
       return;
     }
-    return window.localStorage.word;
+    return;
   };
 
   useEffect(() => {
-    fetchWord();
+    removeStorageWord();
   }, []);
 
   useEffect(() => {
