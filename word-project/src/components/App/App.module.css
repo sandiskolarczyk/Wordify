@@ -16,6 +16,15 @@
   color: black;
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
+  margin-bottom: 12px;
+}
+
+.secondBottomLink {
+  text-align: center;
+  color: black;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  margin: 0px;
 }
 
 .githubLink {

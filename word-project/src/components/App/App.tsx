@@ -7,7 +7,7 @@ function App() {
   const url: string = "https://wordify-app.herokuapp.com";
 
   // state for word of the day
-  const [word, setWord] = useState(() => {
+  const [word, setWord] = useState((): string => {
     // get stored value
     const savedWord: string | null = window.localStorage.getItem("word");
     return savedWord || "";
@@ -35,7 +35,7 @@ function App() {
     setDate(today);
   };
 
-  useEffect(() => {
+  useEffect((): void => {
     newDate();
   }, []);
 
@@ -58,14 +58,12 @@ function App() {
     //console.log(word);
   }, [word]);
 
-  // window.localStorage.setItem("word", word)
-
   // store and get the date from local storage
   let today: string | null = new Date().toLocaleDateString();
   window.localStorage.setItem("date", today);
 
   // check if one day has passed
-  const hasOneDayPassed = (): boolean | undefined => {
+  /*  const hasOneDayPassed = (): boolean | undefined => {
     // if there's a date in local storage and it's equal to the above:
     // inferring a day has yet to pass since both dates are equal
     if (localStorage.date === today) {
@@ -77,11 +75,11 @@ function App() {
       console.log(`It's a new day: ${today}`);
       return true;
     }
-  };
+  }; */
 
   //console.log(hasOneDayPassed());
 
-  const fetchWord = async (): Promise<void> => {
+  /*   const fetchWord = async (): Promise<void> => {
     if (hasOneDayPassed() === false) {
       return;
     } else {
@@ -89,88 +87,40 @@ function App() {
         `https://words-api-project.herokuapp.com/words`
       );
       const data = await response.json(); */
-      /*       // return a random word
+  /*       // return a random word
       let randomNumber: number = Math.floor(Math.random() * 31);
       let dailyWord = words.words[randomNumber].word;
       setWord(dailyWord);
       window.localStorage.setItem("word", word); */
-    }
-  };
+  //}
+  /*  };
 
   useEffect((): void => {
     fetchWord();
-  }, []);
+  }, []); */
 
   useEffect((): void => {
-    const wordDay = async () => {
+    const fetchWord = async (): Promise<void> => {
       const now: Date = new Date();
       //window.localStorage.removeItem("word");
       //window.localStorage.removeItem("expiry");
       if (now.getTime() > localStorage.expiry || word === "") {
+        window.localStorage.removeItem("word");
         const response: Response = await fetch(
           `https://words-api-project.herokuapp.com/words`
         );
         const data = await response.json();
         // return a random word
         let randomNumber: number = Math.floor(Math.random() * 31);
-        let dailyWord = data[randomNumber].word;
+        let dailyWord: string = data[randomNumber].word;
         setWord(dailyWord);
       }
       // localStorage.setItem("word", word);
     };
-    wordDay();
+    fetchWord();
   }, []);
 
-  // const fetchWord = async (): Promise<void> => {
-  //   const response = await fetch(
-  //     `https://words-api-project.herokuapp.com/words`
-  //   );
-  //   const data = await response.json();
-
-  //   // return a random word
-  //   let randomNumber: number = Math.floor(Math.random() * 31);
-  //   let dailyWord = data[randomNumber].word;
-  //   setWord(dailyWord);
-  // const word = localStorage.getItem("word");
-  // localStorage.getItem("expiry");
-  // // if the word doesn't exist, fetch from API and set the word state
-  // if (!word) {
-  // }
-  // const now = new Date();
-  // // compare the expiry time of the item with the current time
-  // if (now.getTime() > localStorage.expiry) {
-  //   console.log(now.getTime());
-  //   // If the item is expired, delete the item from storage
-  //   // and return
-  //   window.localStorage.removeItem("word");
-  //   window.localStorage.removeItem("expiry");
-  //   return;
-  // }
-  // return window.localStorage.word;
-  //};
-
-  /*  const removeStorageWord = (): void => {
-    const now: Date = new Date();
-    // compare the expiry time of the item with the current time
-    // window.localStorage.removeItem("word");
-
-    if (now.getTime() > localStorage.expiry) {
-      // If the item is expired, delete the item from storage
-      // and return
-      window.localStorage.removeItem("word");
-      window.localStorage.removeItem("expiry");
-      // window.localStorage.clear();
-      return;
-    } else {
-      return;
-    }
-  };
-
-  useEffect(() => {
-    removeStorageWord();
-  }, []); */
-
-  useEffect(() => {
+  useEffect((): void => {
     const fetchSongs = async (): Promise<void> => {
       const urlSearch = new URLSearchParams({ song: word });
       await fetch(`${url}/songs-of-the-day?${urlSearch}`, {
@@ -207,6 +157,27 @@ function App() {
             href="https://github.com/sandiskolarczyk"
           >
             Sandra
+          </a>
+          .
+        </p>
+        <p className={css.secondBottomLink}>
+          Oh, you meant tech stack? Built with{" "}
+          <a
+            className={css.githubLink}
+            target="_blank"
+            rel="noreferrer"
+            href="https://reactjs.org/"
+          >
+            React
+          </a>{" "}
+          & music courtesy of{" "}
+          <a
+            className={css.githubLink}
+            target="_blank"
+            rel="noreferrer"
+            href="https://developer.spotify.com/documentation/web-api/"
+          >
+            Spotify
           </a>
           .
         </p>
