@@ -53,14 +53,14 @@ function App() {
     const expiryTime: number = currentTime + tillMidnight;
     console.log(`expiry time: ${expiryTime}`);
 
+    // store and get the date from local storage
+    let today: string | null = now.toLocaleDateString();
+    window.localStorage.setItem("date", today);
+
     window.localStorage.setItem("expiry", JSON.stringify(expiryTime));
     localStorage.setItem("word", word);
     //console.log(word);
   }, [word]);
-
-  // store and get the date from local storage
-  let today: string | null = new Date().toLocaleDateString();
-  window.localStorage.setItem("date", today);
 
   // check if one day has passed
   /*  const hasOneDayPassed = (): boolean | undefined => {
@@ -105,7 +105,8 @@ function App() {
       //window.localStorage.removeItem("word");
       //window.localStorage.removeItem("expiry");
       if (now.getTime() > localStorage.expiry || word === "") {
-        window.localStorage.removeItem("word");
+        window.localStorage.clear();
+
         const response: Response = await fetch(
           `https://words-api-project.herokuapp.com/words`
         );
@@ -118,7 +119,7 @@ function App() {
       // localStorage.setItem("word", word);
     };
     fetchWord();
-  }, []);
+  });
 
   useEffect((): void => {
     const fetchSongs = async (): Promise<void> => {
