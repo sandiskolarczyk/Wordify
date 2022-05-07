@@ -8,12 +8,18 @@ function App() {
 
   // state for word of the day
   const [word, setWord] = useState((): string => {
-    // get stored value
     const savedWord: string | null = window.localStorage.getItem("word");
-    return savedWord || "";
+    if (savedWord) {
+      return savedWord;
+    } else {
+      return "";
+    }
+    // get stored value
+    //const savedWord: string | null = window.localStorage.getItem("word");
+    //return savedWord || "";
   });
 
-  //const [word, setWord] = useState("sea");
+  // const [word, setWord] = useState("");
 
   // state for array of song ids from spotify API
   const [API, setAPI] = useState([]);
@@ -102,6 +108,7 @@ function App() {
   useEffect((): void => {
     const fetchWord = async (): Promise<void> => {
       const now: Date = new Date();
+
       //window.localStorage.removeItem("word");
       //window.localStorage.removeItem("expiry");
       if (now.getTime() > localStorage.expiry || word === "") {
