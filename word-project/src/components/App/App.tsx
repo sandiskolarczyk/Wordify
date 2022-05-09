@@ -19,7 +19,7 @@ function App() {
     //return savedWord || "";
   });
 
-  // const [word, setWord] = useState("");
+  // const [word, setWord] = useState("ice");
 
   // state for array of song ids from spotify API
   const [API, setAPI] = useState([]);
@@ -60,7 +60,7 @@ function App() {
     console.log(`expiry time: ${expiryTime}`);
 
     // store and get the date from local storage
-    let today: string | null = now.toLocaleDateString();
+    let today: string | null = new Date().toLocaleDateString();
     window.localStorage.setItem("date", today);
 
     window.localStorage.setItem("expiry", JSON.stringify(expiryTime));
@@ -105,15 +105,44 @@ function App() {
     fetchWord();
   }, []); */
 
+  /* useEffect((): void => {
+    function clearStorage(): boolean {
+      const now: Date = new Date();
+
+      if (now.getTime() > localStorage.expiry) {
+        window.localStorage.clear();
+        //setWord("");
+        return false;
+      } else {
+        return true;
+      }
+    }
+    clearStorage();
+  }, []); */
+
   useEffect((): void => {
     const fetchWord = async (): Promise<void> => {
-      const now: Date = new Date();
+      //const now: Date = new Date();
 
       //window.localStorage.removeItem("word");
       //window.localStorage.removeItem("expiry");
-      if (now.getTime() > localStorage.expiry || word === "") {
-        window.localStorage.clear();
+      /*  if (now.getTime() > localStorage.expiry || word === "") {
+        window.localStorage.getItem("word");
+        window.localStorage.clear(); */
 
+      function clearStorage(): boolean {
+        const now: Date = new Date();
+
+        if (now.getTime() > localStorage.expiry) {
+          window.localStorage.clear();
+          setWord("");
+          return false;
+        } else {
+          return true;
+        }
+      }
+
+      if (clearStorage() === false) {
         const response: Response = await fetch(
           `https://words-api-project.herokuapp.com/words`
         );
@@ -123,6 +152,8 @@ function App() {
         let dailyWord: string = data[randomNumber].word;
         setWord(dailyWord);
       }
+
+      //}
       // localStorage.setItem("word", word);
     };
     fetchWord();
