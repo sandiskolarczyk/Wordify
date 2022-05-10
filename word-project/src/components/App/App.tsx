@@ -8,18 +8,22 @@ function App() {
 
   // state for word of the day
   const [word, setWord] = useState((): string => {
-    const savedWord: string | null = window.localStorage.getItem("word");
-    if (savedWord) {
-      return savedWord;
+    const now: Date = new Date();
+
+    if (now.getTime() > localStorage.expiry) {
+      window.localStorage.clear();
+      setWord("");
+      return word;
     } else {
-      return "";
+      const savedWord: string | null = window.localStorage.getItem("word");
+      return savedWord || "";
     }
     // get stored value
     //const savedWord: string | null = window.localStorage.getItem("word");
     //return savedWord || "";
   });
 
-  // const [word, setWord] = useState("ice");
+  // const [word, setWord] = useState("call");
 
   // state for array of song ids from spotify API
   const [API, setAPI] = useState([]);
@@ -46,26 +50,35 @@ function App() {
   }, []);
 
   useEffect((): void => {
-    const now: Date | string = new Date();
+    const setExpiry = (): void => {
+      if (word !== undefined) {
+        localStorage.setItem("word", word);
+      }
 
-    // the current millisecond time
-    const currentTime: number = now.getTime();
-    console.log(`current time: ${currentTime}`);
+      if (localStorage.word !== undefined) {
+        const now: Date | string = new Date();
 
-    // milliseconds until midnight
-    const tillMidnight: number = now.setHours(24, 0, 0, 0) - Date.now();
-    console.log(`till midnight: ${tillMidnight}`);
+        // the current millisecond time
+        const currentTime: number = now.getTime();
+        console.log(`current time: ${currentTime}`);
 
-    const expiryTime: number = currentTime + tillMidnight;
-    console.log(`expiry time: ${expiryTime}`);
+        // milliseconds until midnight
+        const tillMidnight: number = now.setHours(24, 0, 0, 0) - Date.now();
+        console.log(`till midnight: ${tillMidnight}`);
 
-    // store and get the date from local storage
-    let today: string | null = new Date().toLocaleDateString();
-    window.localStorage.setItem("date", today);
+        const expiryTime: number = currentTime + tillMidnight;
+        console.log(`expiry time: ${expiryTime}`);
 
-    window.localStorage.setItem("expiry", JSON.stringify(expiryTime));
-    localStorage.setItem("word", word);
-    //console.log(word);
+        // store and get the date from local storage
+        let today: string | null = new Date().toLocaleDateString();
+        window.localStorage.setItem("date", today);
+
+        window.localStorage.setItem("expiry", JSON.stringify(expiryTime));
+        //localStorage.setItem("word", word);
+        //console.log(word);
+      }
+    };
+    setExpiry();
   }, [word]);
 
   // check if one day has passed
@@ -130,7 +143,7 @@ function App() {
         window.localStorage.getItem("word");
         window.localStorage.clear(); */
 
-      function clearStorage(): boolean {
+      /*  function clearStorage(): boolean {
         const now: Date = new Date();
 
         if (now.getTime() > localStorage.expiry) {
@@ -140,9 +153,9 @@ function App() {
         } else {
           return true;
         }
-      }
+      } */
 
-      if (clearStorage() === false) {
+      if (word === "") {
         const response: Response = await fetch(
           `https://words-api-project.herokuapp.com/words`
         );
