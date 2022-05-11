@@ -161,7 +161,7 @@ function App() {
         );
         const data = await response.json();
         // return a random word
-        let randomNumber: number = Math.floor(Math.random() * 31);
+        let randomNumber: number = Math.floor(Math.random() * 41);
         let dailyWord: string = data[randomNumber].word;
         setWord(dailyWord);
       }
