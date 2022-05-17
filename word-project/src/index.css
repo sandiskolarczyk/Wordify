@@ -6,14 +6,20 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  animation-name: backgroundColorPalette;
+  /* animation-name: backgroundColorPalette;
   animation-duration: 60s;
   animation-iteration-count: infinite;
   animation-direction: alternate;
-  animation-timing-function: linear;
+  animation-timing-function: linear; */
+  background: url(https://images.unsplash.com/photo-1628780188245-8c0f3ba27a89?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1610&q=80)
+    center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
-@keyframes backgroundColorPalette {
+/* @keyframes backgroundColorPalette {
   0% {
     background: #e6998d;
   }
@@ -29,7 +35,7 @@ body {
   100% {
     background: #e2afff;
   }
-}
+} */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",

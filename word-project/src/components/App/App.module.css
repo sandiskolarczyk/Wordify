@@ -13,7 +13,7 @@
 
 .bottomLink {
   text-align: center;
-  color: black;
+  color: beige;
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
   margin-bottom: 12px;
@@ -21,7 +21,7 @@
 
 .secondBottomLink {
   text-align: center;
-  color: black;
+  color: beige;
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
   margin: 0px;
@@ -29,14 +29,22 @@
 
 .githubLink {
   text-align: center;
-  color: #71253a;
+  color: beige;
+  text-decoration: underline;
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
+}
+
+.githubLink:hover {
+  color: #c6f2f7;
+  border: 1px solid beige;
+  border-radius: 5px;
   text-decoration: none;
 }
 
 .message {
   font-family: "Montserrat", sans-serif;
+  color: beige;
   font-weight: 500;
   text-align: center;
   font-size: 1.2em;
