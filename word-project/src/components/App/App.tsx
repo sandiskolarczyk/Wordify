@@ -10,20 +10,18 @@ function App() {
   const [word, setWord] = useState((): string => {
     const now: Date = new Date();
 
+    // check if one day has passed
     if (now.getTime() > localStorage.expiry) {
+      // if so, clear local storage and set word to be undefined
       window.localStorage.clear();
       setWord("");
       return word;
     } else {
+      // get stored value
       const savedWord: string | null = window.localStorage.getItem("word");
       return savedWord || "";
     }
-    // get stored value
-    //const savedWord: string | null = window.localStorage.getItem("word");
-    //return savedWord || "";
   });
-
-  // const [word, setWord] = useState("call");
 
   // state for array of song ids from spotify API
   const [API, setAPI] = useState([]);
@@ -74,87 +72,13 @@ function App() {
         window.localStorage.setItem("date", today);
 
         window.localStorage.setItem("expiry", JSON.stringify(expiryTime));
-        //localStorage.setItem("word", word);
-        //console.log(word);
       }
     };
     setExpiry();
   }, [word]);
 
-  // check if one day has passed
-  /*  const hasOneDayPassed = (): boolean | undefined => {
-    // if there's a date in local storage and it's equal to the above:
-    // inferring a day has yet to pass since both dates are equal
-    if (localStorage.date === today) {
-      console.log(`It's still the same day: ${localStorage.date}`);
-      return false;
-
-      // this portion of logic occurs when a day has passed
-    } else if (localStorage.date !== today) {
-      console.log(`It's a new day: ${today}`);
-      return true;
-    }
-  }; */
-
-  //console.log(hasOneDayPassed());
-
-  /*   const fetchWord = async (): Promise<void> => {
-    if (hasOneDayPassed() === false) {
-      return;
-    } else {
-      /* const response: Response = await fetch(
-        `https://words-api-project.herokuapp.com/words`
-      );
-      const data = await response.json(); */
-  /*       // return a random word
-      let randomNumber: number = Math.floor(Math.random() * 31);
-      let dailyWord = words.words[randomNumber].word;
-      setWord(dailyWord);
-      window.localStorage.setItem("word", word); */
-  //}
-  /*  };
-
-  useEffect((): void => {
-    fetchWord();
-  }, []); */
-
-  /* useEffect((): void => {
-    function clearStorage(): boolean {
-      const now: Date = new Date();
-
-      if (now.getTime() > localStorage.expiry) {
-        window.localStorage.clear();
-        //setWord("");
-        return false;
-      } else {
-        return true;
-      }
-    }
-    clearStorage();
-  }, []); */
-
   useEffect((): void => {
     const fetchWord = async (): Promise<void> => {
-      //const now: Date = new Date();
-
-      //window.localStorage.removeItem("word");
-      //window.localStorage.removeItem("expiry");
-      /*  if (now.getTime() > localStorage.expiry || word === "") {
-        window.localStorage.getItem("word");
-        window.localStorage.clear(); */
-
-      /*  function clearStorage(): boolean {
-        const now: Date = new Date();
-
-        if (now.getTime() > localStorage.expiry) {
-          window.localStorage.clear();
-          setWord("");
-          return false;
-        } else {
-          return true;
-        }
-      } */
-
       if (word === "") {
         const response: Response = await fetch(
           `https://words-api-project.herokuapp.com/words`
@@ -165,9 +89,6 @@ function App() {
         let dailyWord: string = data[randomNumber].word;
         setWord(dailyWord);
       }
-
-      //}
-      // localStorage.setItem("word", word);
     };
     fetchWord();
   });
@@ -183,9 +104,9 @@ function App() {
         })
         .then(async function (data) {
           //console.log(data);
-
           setAPI(data);
-        });
+        })
+        .catch((error) => console.error(error));
     };
     fetchSongs();
   }, [word]);
